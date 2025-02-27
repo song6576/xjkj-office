@@ -1,0 +1,162 @@
+
+// 公共样式
+.text-white {
+    color: #fff;
+}
+
+.text-black {
+    color: #000;
+}
+
+.text-blue {
+    color: #0099ff;
+}
+
+.bg-white {
+    background-color: #fff;
+}
+
+.bg-black {
+    background-color: #000;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-1 {
+    flex: 1;
+}
+.flex-2 {
+    flex: 2;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+.flex-start {
+    justify-content: flex-start;
+}
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-ai {
+    align-items: center;
+}
+
+.flex-jc {
+    justify-content: center;
+}
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+.border-b-1 {
+    border-bottom: 1px solid #ccc;
+}
+.border-t-1 {
+    border-top: 1px solid #ccc;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.w-100vh {
+    width: 100vh;
+}
+
+.h-100vh {
+    height: 100vh;
+}
+
+.cp {
+    cursor: pointer;
+}
+
+// 公共内边距，用循环实现
+@for $i from 1 through 50 {
+    .p-#{$i} {
+        padding: #{$i}px;
+    }
+    .pt-#{$i} {
+        padding-top: #{$i}px;
+    }
+    .pr-#{$i} {
+        padding-right: #{$i}px;
+    }
+    .pb-#{$i} {
+        padding-bottom: #{$i}px;
+    }
+    .pl-#{$i} {
+        padding-left: #{$i}px;
+    }
+    .px-#{$i} {
+        padding-left: #{$i}px;
+        padding-right: #{$i}px;
+    }
+    .py-#{$i} {
+        padding-top: #{$i}px;
+        padding-bottom: #{$i}px;
+    }
+}
+
+// 公共外边距，用循环实现
+@for $i from 1 through 50 {
+    .m-#{$i} {
+        margin: #{$i}px;
+    }
+    .mt-#{$i} {
+        margin-top: #{$i}px;
+    }
+    .mr-#{$i} {
+        margin-right: #{$i}px;
+    }
+    .mb-#{$i} {
+        margin-bottom: #{$i}px;
+    }
+    .ml-#{$i} {
+        margin-left: #{$i}px;
+    }
+    .mx-#{$i} {
+        margin-left: #{$i}px;
+        margin-right: #{$i}px;
+    }
+    .my-#{$i} {
+        margin-top: #{$i}px;
+        margin-bottom: #{$i}px;
+    }
+}
+
+// 公共字体大小，用循环实现
+@for $i from 1 through 50 {
+    .fs-#{$i} {
+        font-size: #{$i}px;
+    }
+}
+// 公共圆角，用循环实现
+@for $i from 1 through 50 {
+    .radius-#{$i} {
+        border-radius: #{$i}px;
+    }
+}
+
