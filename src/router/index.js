@@ -5,7 +5,8 @@ import NavContent from '../pages/navContent/index.vue';
 import Detail from '../pages/detail/index.vue';
 import SearchContent from '../pages/searchContent/index.vue';
 import UserDetail from '../pages/userDetail/index.vue';
-import Comment from '../pages/comment/index.vue'
+import Comment from '../pages/comment/index.vue';
+import Srxk from '../pages/srxk/index.vue';
 
 const routes = [
   // 重定向
@@ -42,6 +43,11 @@ const routes = [
     path: '/comment',
     name: 'comment',
     component: Comment
+  },
+  {
+    path: '/srxk/:id',
+    name: 'srxk',
+    component: Srxk
   }
 ];
 

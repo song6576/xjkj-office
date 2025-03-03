@@ -44,11 +44,11 @@ const toSearch = () => {
   router.push({ name: "searchContent", params: { keyword: searchValue.value } });
 };
 // 监听键盘回车
-document.addEventListener("keyup", function (e) {
-  if (e.keyCode === 13) {
-    toSearch();
-  }
-});
+// document.addEventListener("keyup", function (e) {
+//   if (e.keyCode === 13) {
+//     toSearch();
+//   }
+// });
 const getSearchTag = async () => {
   const res = await getHomeSearch();
   tags.value = res.data;

@@ -29,18 +29,22 @@
           <div class="flex mt-20 w-100">
             <div class="flex-1">
               <div class="line flex flex-ai w-100 fs-17">
-                <div>开通会员尊享以下福利</div>
+                <div style="color: #000;">「核心课程权益」</div>
               </div>
-              <div class="dsy flex flex-ai flex-jc w-100 text-center mt-20">
-                所有原创引流获客软件免费用
-                <br />一年小红书ai云控矩阵克隆系统<br />全行业自热实战sop<br />
-                自热打粉底层实操教学 <br />全平台ad投流实操打粉教程
-                <br />璇机跳转外链平台至尊会员1个月 20000+群友的源头资源对接
-                <br />社群专属微信群 <br />飞书万人大群 <br />
-                388元((原价688元)一次付费<br />
-                3年制服务<br />
-                不定期涨价<br />
-                过时不候！提供的服务价值远远大于门槛价格
+              <div class="dsy flex flex-ai flex-jc w-100 text-center mt-20 fs-14">
+                ⚡️ 北斗七维创作体系终身畅学
+                <br />天枢：15秒爆款公式训练营+黄金开头法则<br />天璇：情绪钩子+信息密度双螺旋模型<br />
+                天玑：流量沙盘推演系统实战教学 <br />天权：气场强度分级训练体系
+                <br />天衡：跨平台一稿多剪实战系统
+                <br />开阳：三幕剧人设塑造法全案 <br />瑶光：电影级视听语言开发课程 <br />
+                🛠 价值万元创作工具包<br />
+                √ 全行业自热实战SOP模板库<br />
+                √ 抖音AI云控矩阵克隆系统（1年）<br />
+                √ 全平台AD投流实操教学系统<br />
+                璇机跳转外链平台至尊会员（30天）<br />
+                ★ 专属VIP微信群（实时答疑）<br />
+                ★ 爆款案例拆解视频特权<br />
+                ★ 飞书万人大厂级资源池
               </div>
             </div>
             <div class="flex flex-col ml-20 flex-1">
@@ -345,15 +349,21 @@ const handleOverlayClick = () => {
   padding: 5px 15px;
   border-radius: 8px;
   border: 1px solid #6d6d6d;
+  background-color: #fff;
 }
 .active {
   border: 2px solid red;
 }
 .level {
   position: absolute;
-  top: 5px;
-  left: 10px;
-  color: #6d6d6d;
+  top: -2px;
+  left: 0px;
+  color: #ffffff;
+  background-color: red;
+  border-radius: 8px 0px 8px 0px;
+  padding: 2px 5px;
+  font-size: 12px;
+
 }
 .muted-box {
   background: rgba(0, 0, 0, 0.03);

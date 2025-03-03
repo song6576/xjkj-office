@@ -1,0 +1,388 @@
+.user_menu_member {
+  padding: 3px;
+}
+.content_detail {
+  position: relative;
+  background-color: #f8f9fb;
+}
+.content_html {
+  overflow: hidden;
+}
+.content-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.nav_flex {
+  position: absolute;
+  top: -34px;
+  left: 0px;
+  color: #999;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 去掉a标签的默认样式 */
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* 去掉a标签的默认下划线 */
+a:hover {
+  text-decoration: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zoomed-image {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* 去掉a标签的默认下划线 */
+a:visited {
+  text-decoration: none;
+}
+
+/* 去掉a标签的默认下划线 */
+a:active {
+  text-decoration: none;
+}
+
+/* 去掉a标签的默认下划线 */
+a:link {
+  text-decoration: none;
+}
+
+.separator {
+  color: #6d6d6d;
+}
+.separator::after,
+.separator::before {
+  content: "";
+  background: rgba(50, 50, 50, 0.06);
+  max-width: 20%;
+  height: 1px;
+  margin: 0 1em;
+  flex: 1;
+}
+.left_modal {
+  width: 880px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+.line {
+  height: 1px;
+  background-color: rgba(50, 50, 50, 0.06);
+  width: 100%;
+}
+
+.profilePicture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dsy_detail {
+  font-weight: 600;
+  font-size: 18px;
+  color: #265aff;
+}
+.box_img img {
+  width: 100%;
+  height: 100%;
+}
+.right_modal {
+  width: 296px;
+}
+.box_img_content_item {
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.login {
+  width: 296px;
+  height: 308px;
+}
+.login_btn {
+  width: 101px;
+  height: 30px;
+  background: linear-gradient(126deg, #0961fe 0%, #0b99f5 100%);
+  border-radius: 20px;
+  color: #fff;
+  border-image: linear-gradient(153deg, rgba(50, 201, 255, 1), rgba(171, 255, 255, 1)) 1 1;
+}
+.register_btn {
+  width: 101px;
+  height: 30px;
+  background: linear-gradient(126deg, #fd7808 0%, #f8b41a 100%);
+  border-radius: 20px;
+  color: #fff;
+  border-image: linear-gradient(153deg, rgba(248, 169, 55, 1), rgba(255, 216, 161, 1)) 1 1;
+}
+.office {
+  width: 296px;
+  height: 900px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.active {
+  background: #3873ff;
+  border-radius: 10px;
+  color: #fff;
+}
+.tab_box_img {
+  width: 160px;
+  height: 113px;
+  border-radius: 10px;
+}
+.avator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+.activePage {
+  color: #fff;
+  background: #3873ff !important;
+}
+
+.shareActive {
+  background: rgba(0, 0, 0, 0.1);
+}
+.pageItem {
+  background-color: #fff;
+}
+.card_data {
+  position: absolute;
+  right: 3%;
+  bottom: 13%;
+}
+.tabList_content {
+  width: 760px;
+}
+.fs_count {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #4d4d4d;
+  font-size: 12px;
+  opacity: 0.7;
+}
+.sort::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  background: #6c6d6e;
+  opacity: 0.3;
+}
+.dz,
+.share {
+  position: relative;
+  opacity: 0.7;
+}
+.share_pop {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  min-width: 110px;
+  transform: translate(-50%, 0%);
+  background-color: #fff;
+  color: #000;
+  z-index: 999999;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+}
+.shareItem {
+  padding: 5px 10px;
+}
+.shareItem:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.dz:hover {
+  opacity: 1;
+}
+.share:hover {
+  opacity: 1;
+}
+.sc {
+  opacity: 0.8;
+}
+.sc:hover {
+  opacity: 1;
+}
+.zf_box {
+  position: relative;
+  width: 500px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.1);
+}
+.member_s {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 14px;
+  background-color: red;
+  border-radius: 8px 5px 20px 0;
+  padding: 2px 12px;
+  color: #fff;
+}
+.left_img {
+  width: 300px;
+  height: 200px;
+  border-radius: 15px;
+  background: url(../../assets/content_box.png) no-repeat;
+  background-size: cover;
+}
+.member_btn {
+  width: 200px;
+  padding: 5px 0;
+  background: linear-gradient(135deg, #fd7a64 10%, #fb2d2d 100%);
+  border-radius: 18px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.money {
+  margin-top: -12px;
+}
+.userLevelName {
+  position: absolute;
+  left: 0;
+  top: 0px;
+  font-size: 12px;
+  background-color: red;
+  border-radius: 0px 2px 10px 0;
+  padding: 2px 10px;
+  color: #fff;
+}
+.appUserUserLevelName {
+  padding: 1px 4px;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(126deg, #fd7808 0%, #f8b41a 100%);
+}
+.appUserUserLevelLogin {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 20px;
+  height: 20px;
+}
+.viewReply {
+  color: #3873ff;
+}
+.copyLine {
+  position: absolute;
+  width: 270px;
+  top: -50px;
+  left: 60px;
+  background: rgba(0, 0, 0, 1);
+  color: #fff;
+  padding: 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  z-index: 9999999;
+}
+.poster {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999999;
+}
+#capture {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 360px;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+}
+.logo_poster {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100px;
+  height: 25px;
+}
+.poster_bg {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.poster_content {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 0px 0 10px 10px;
+}
+.poster_title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: -10px;
+}
+.nowTime {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 12px;
+}
+
+.share_logo {
+  width: 130px;
+  height: 32px;
+  margin-left: 10px;
+}
+
+.share_box {
+  border: 1px solid #e5e5e5;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.sys {
+  display: flex;
+  justify-content: end;
+  margin-top: 35px;
+  color: #999;
+}
+
+.BtnLogo {
+  position: absolute;
+  left: 50%;
+  bottom: -35px;
+  transform: translate(-50%, 0);
+}

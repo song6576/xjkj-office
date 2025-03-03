@@ -67,3 +67,16 @@ input {
   bottom: 2%;
   right: 5%;
 }
+
+.code {
+  color: #467bf8;
+}
+
+.codeBtn {
+  background-color: #000;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  width: 100px;
+}

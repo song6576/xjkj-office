@@ -1,21 +1,21 @@
 <template>
   <div class="user_detail bg-color flex flex-jc" id="user_detail">
     <div class="content_detail flex flex-col">
-      <div class="user_detail_top flex flex-col" style="position: relative;">
+      <div class="user_detail_top flex flex-col" style="position: relative">
         <img src="@/assets/content_box.png" class="user_detail_top_img" alt="" />
         <img
-                src="@/assets/content_box_logo.png"
-                width="80"
-                height="21"
-                alt=""
-                style="position: absolute; left: 25px; top: 25px"
-              />
-              <div class="flex flex-col" style="position: absolute; top: 120px; left: 50px">
-                <div class="fs-48" style="font-family: alibb-medium;">矩阵引流实战</div>
-                <div class=" fs-16 mt-10" style="color: #637693;width: 305px">
-                  在数字海洋中，矩阵引流，不止是数字游戏 更是策略的艺术
-                </div>
-              </div>
+          src="@/assets/content_box_logo.png"
+          width="80"
+          height="21"
+          alt=""
+          style="position: absolute; left: 25px; top: 25px"
+        />
+        <div class="flex flex-col" style="position: absolute; top: 120px; left: 50px">
+          <div class="fs-48" style="font-family: alibb-medium">矩阵引流实战</div>
+          <div class="fs-16 mt-10" style="color: #637693; width: 305px">
+            在数字海洋中，矩阵引流，不止是数字游戏 更是策略的艺术
+          </div>
+        </div>
         <div class="user_detail_top_text">
           <div class="user_detail_content flex flex-ai">
             <div class="user_detail_header_box" @click="avatorChange">
@@ -53,7 +53,10 @@
               <div class="fs-14 pt-5" style="opacity: 0.7">{{ item.name }}</div>
             </div>
           </div>
-          <div class="user_menu_member fs-14 flex flex-ai mt-20 cp">
+          <div
+            class="user_menu_member fs-14 flex flex-ai mt-20 cp"
+            @click="openMemberModal"
+          >
             <img
               src="https://www.duya888.com/wp-content/uploads/2024/06/20240617015052106-vip1.webp"
               width="20"
@@ -65,15 +68,15 @@
           <div class="user_detail_content_fs mt-20 p-10">
             <div class="ml-5">我的服务</div>
             <div class="flex flex-ai mt-10">
-              <div class="flex flex-col flex-ai flex-start cp">
-                <img src="@/assets/order.png" width="35" height="35" alt="" />
-                <div class="fs-12" style="opacity: 0.7">我的订单</div>
+              <div class="flex flex-col flex-ai flex-start cp" @click="myOrder(1)">
+                <img src="@/assets/order-icon.png" width="35" height="35" alt="" />
+                <div class="fs-12 mt-5" style="opacity: 0.7">我的订单</div>
               </div>
             </div>
           </div>
         </div>
         <div class="flex-2 flex flex-start">
-          <div class="card_vip2">
+          <div class="card_vip2" v-if="currentTabIndex === 0">
             <div class="flex flex-ai">
               <img
                 src="https://www.duya888.com/wp-content/uploads/2024/06/20240617015052106-vip1.webp"
@@ -99,6 +102,104 @@
               <div class="btn_text fs-14 cp" @click="openMemberModal">开通社群会员</div>
             </div>
           </div>
+          <div class="w-100" v-if="currentTabIndex === 1">
+            <div class="flex flex-ai">
+              <div class="bar_order"></div>
+              <div>我的订单</div>
+            </div>
+            <div class="flex flex-ai flex-between order_all_box">
+              <div>
+                <div class="flex flex-ai">
+                  <img src="@/assets/order-icon.png" width="23" height="23" />
+                  <div class="ml-5 fs-14">全部订单</div>
+                </div>
+                <div class="mt-20 fs-24">{{ orderTotal }}<span class="fs-14 pl-5">笔</span></div>
+              </div>
+              <img src="@/assets/order-icon.png" width="60" height="60" />
+            </div>
+            <div class="flex flex-ai mt-20">
+              <div class="bar_order"></div>
+              <div>订单明细</div>
+            </div>
+            <div class="flex flex-col w-100 mt-14">
+              <div v-if="orderList.length === 0">
+                <img
+                  src="https://www.duya888.com/wp-content/themes/zibll/img/null-order.svg"
+                  width="280"
+                  height="100%"
+                  alt=""
+                />
+                <p style="margin-top: 40px" class="fs-12 separator">暂无支付订单</p>
+              </div>
+              <div v-else>
+                <div class="flex flex-col">
+                  <div
+                    v-for="(item, index) in orderList"
+                    :key="index"
+                    class="order_box flex flex-between"
+                    style="width: 100% !important"
+                  >
+                    <div class="flex flex-col">
+                      <div>{{ item.productName }}</div>
+                      <div class="py-14 fs-14" style="color: #637693">
+                        订单编号：{{ item.orderNumber }}
+                      </div>
+                      <div class="fs-14" style="color: #637693">
+                        {{ item.createTime }}
+                      </div>
+                    </div>
+                    <div class="flex flex-col flex-between flex-ai">
+                      <div class="">
+                        $<span class="fs-24 pl-5">{{ item.getTheAmount }}</span>
+                      </div>
+                      <div class="flex flex-ai">
+                        <div class="fs-14 mr-4" style="color: #637693">{{ item.content }}</div>
+                        <el-tag :type="item.orderState === 1 ? 'success' : item.orderState === 2 ? 'danger' : 'warning'">
+                          {{
+                            item.orderState === 1
+                              ? "支付成功"
+                              : item.orderState === 2
+                              ? "支付失败"
+                              : "待支付"
+                          }}
+                        </el-tag>
+                        <!-- <div class="ml-10 fs-14">
+                          {{
+                            item.orderState === 1
+                              ? "支付成功"
+                              : item.orderState === 2
+                              ? "支付失败"
+                              : "待支付"
+                          }}
+                        </div> -->
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-30 flex flex-ai">
+                  <div
+                    v-for="(item, index) in dataListPage"
+                    :key="index"
+                    class="px-10 py-3 fs-12 ml-10 cp pageItem"
+                    style="border-radius: 5px"
+                    :class="{ activePage: current === index }"
+                    @click="changePage(item, index)"
+                  >
+                    <div>{{ item }}</div>
+                  </div>
+                  <div
+                    class="cp fs-12 ml-10 px-5 py-3"
+                    style="background-color: #fff"
+                    @click="next"
+                    v-if="dataListPage.length > 1"
+                  >
+                    下一页
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -111,17 +212,78 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import { uploadAvatar } from "@/api/user";
 import { getLoginDetail } from "@/api/login";
+import { getOrderList } from "@/api/order";
 
 const router = useRouter();
 const userStore = useUserStore();
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+const currentTabIndex = ref(0);
+const orderList = ref([
+  {
+    appUserId: 161,
+    orderNumber: "portal1091449265529827328",
+    getTheAmount: 0.01,
+    paymentMethod: 0,
+    content: "微信支付",
+    businessId: 2,
+    businessType: 1,
+    orderEndTime: "2025-02-23T12:14:51.000+00:00",
+    orderState: 1,
+    orderStateContent: "支付成功",
+    productName: "超级会员充值",
+    id: 16,
+    createTime: "2025-02-23 18:14:51",
+  },
+]);
+const orderTotal = ref(0);
+const getOrderLists = async () => {
+  const res = await getOrderList({
+    appUserId: userInfo.id,
+    pageSize: 10,
+    pageNum: current.value + 1,
+  });
+  orderList.value = res.data;
+  orderTotal.value = res.count;
+  totalPages.value = Math.ceil(res.count / 10);
+  visiblePages();
+};
 const openMemberModal = () => {
   userStore.showMemberModal();
 };
+const current = ref(0);
+const dataListPage = ref([1, 2, 3, 4, 5]);
+const changePage = (item, index) => {
+  current.value = index;
+  getOrderLists();
+};
+const next = () => {
+  current.value = current.value + 1;
+  getOrderLists();
+  if (current.value >= dataListPage.value.length) {
+    current.value = 0;
+    getOrderLists();
+  }
+};
+const totalPages = ref(0);
+const visiblePages = () => {
+  let startPage = Math.max(current.value - Math.floor(10 / 2), 1);
+  let endPage = startPage + 10 - 1;
+
+  if (endPage > totalPages.value) {
+    endPage = totalPages.value;
+    startPage = Math.max(endPage - 10 + 1, 1);
+  }
+  const aa = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  dataListPage.value = aa;
+};
 onMounted(() => {
+  getOrderLists();
   getLoginDetails();
 });
 const list = ref([]);
+const myOrder = (index) => {
+  currentTabIndex.value = index;
+};
 const avatorChange = () => {
   // router.push("/user/upload");
   // 唤起上传，上传头像

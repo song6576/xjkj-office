@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <router-view></router-view>
+    <div>
+      <router-view></router-view>
+    </div>
     <Footer />
   </div>
 </template>
@@ -35,6 +37,26 @@ import Footer from '@/components/footer/index.vue'
   src: url('@/font/ALIBABA-PUHUITI-REGULAR.OTF') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+.text_out-1 {
+  /* 文字超出一行显示... */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text_out-2 {
+  /* 文字超出两行显示... */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.text_out-3 {
+  /* 文字超出三行显示... */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 .bg-color {
   background-color: #f8f9fb;

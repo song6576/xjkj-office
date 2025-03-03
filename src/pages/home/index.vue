@@ -19,7 +19,7 @@
                 class="box_img"
                 style="width: 748px; height: 308px; position: relative"
               >
-                <img src="@/assets/content_box.png" class="content_box" alt="" />
+                <img :src="bigTitleContent?.backgroundImg" class="content_box" alt="" />
               </div>
               <img
                 src="@/assets/content_box_logo.png"
@@ -29,14 +29,14 @@
                 style="position: absolute; left: 25px; top: 25px"
               />
               <div class="flex flex-col" style="position: absolute; top: 120px; left: 50px">
-                <div class="fs-40" style="font-family: alibb-medium;">矩阵引流实战</div>
-                <div class=" fs-16 mt-10" style="color: #637693;width: 305px">
-                  在数字海洋中，矩阵引流，不止是数字游戏 更是策略的艺术
+                <div class="fs-40 text_out-1" style="font-family: alibb-medium;">{{bigTitleContent?.title}}</div>
+                <div class=" fs-16 mt-10 text_out-2" style="color: #637693;width: 305px">
+                  {{bigTitleContent?.ziTitle}}
                 </div>
               </div>
               <div class="content_dsy p-15">
-                <div class="box_img_title">{{ bigTitleContent?.title }}</div>
-                <div class="box_img_content fs-12 mt-5" style="color: #637693">
+                <div class="box_img_title text_out-1">{{ bigTitleContent?.title }}</div>
+                <div class="box_img_content text_out-2 fs-12 mt-5" style="color: #637693;width: 700px;" :title="bigTitleContent?.content">
                   {{ bigTitleContent?.content }}
                 </div>
               </div>
@@ -53,7 +53,7 @@
                 @click="goNavContent(item)"
               >
                 <div class="box_img" style="width: 240px; height: 95px;position: relative">
-                  <img src="@/assets/content_box.png" class="content_box" alt="" />
+                  <img :src="item.backgroundImg" class="content_box" alt="" />
                 </div>
                 <img
                 src="@/assets/content_box_logo.png"
@@ -62,10 +62,10 @@
                 alt=""
                 style="position: absolute; left: -10px; top: 5px;transform: scale(0.4)"
               />
-              <div class="flex flex-col" style="position: absolute; top: 0px; left:-90px;transform: scale(0.25)">
-                <div class="fs-40" style="font-family: alibb-medium;">矩阵引流实战</div>
-                <div class=" fs-16 mt-10" style="color: #637693;width: 305px">
-                  在数字海洋中，矩阵引流，不止是数字游戏 更是策略的艺术
+              <div class="flex flex-col" style="position: absolute; top: 0px; left:-140px;transform: scale(0.25);width: 435px">
+                <div class="fs-40 text_out-1" style="font-family: alibb-medium;">{{ item?.title }}</div>
+                <div class=" fs-16 mt-10 text_out-2" style="color: #637693;width: 260px">
+                  {{ item?.ziTitle }}
                 </div>
               </div>
                 <div class="content_dsy p-15">
@@ -74,6 +74,9 @@
                     {{ item.content }}
                   </div>
                 </div>
+                <div class="fs_count flex flex-ai flex-jc fs-8" style="height: 10px">
+                {{ item?.articleSum }}
+              </div>
               </div>
             </div>
             <div class="flex flex-col">
@@ -247,9 +250,9 @@
                 </div>
               </div>
             </div>
-            <div class="office mt-20">
+            <!-- <div class="office mt-20">
               <div class="title_office m-20">璇机官方联创</div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -259,7 +262,7 @@
     <div class="about_title">关于我们</div>
     <div
       class="about_content flex flex-ai flex-jc fs-12 text-center mt-20"
-      style="width: 820px; line-height: 40px; color: #1f2329"
+      style="width: 820px; line-height: 30px; color: #1f2329"
     >
       杭州璇机星炬科技有限公司专注于中小企业及素人IP打造领域，致力于为每一位怀揣梦想的客户开启成功之路。
       <br />我们凭借前沿的AI匹配技术，结合庞大的爆款内容库，仅需3个月，就能将素人成功孵化为垂直领域的KOC，让普通人在互联网浪潮中崭露头角。<br />
@@ -441,6 +444,7 @@ const tabListContent = ref([]);
 .box_img img {
   width: 100%;
   height: 100%;
+  border-radius: 12px 12px 0px 0px;
 }
 .right_modal {
   width: 296px;

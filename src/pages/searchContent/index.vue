@@ -275,12 +275,12 @@ const toSearch = () => {
 };
 
 // 监听键盘回车
-document.addEventListener("keyup", function (e) {
-  if (e.keyCode === 13) {
-    toSearch();
-    console.log("searchValue2", searchValue.value,keyword);
-  }
-});
+// document.addEventListener("keyup", function (e) {
+//   if (e.keyCode === 13) {
+//     toSearch();
+//     console.log("searchValue2", searchValue.value,keyword);
+//   }
+// });
 const toDetail = (item) => {
   routePage.push({ name: "detail", params: { id: item.id } });
 };

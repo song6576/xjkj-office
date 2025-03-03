@@ -1,0 +1,67 @@
+.srck {
+  max-width: 1200px;
+  margin: 100px auto;
+}
+.content_srck {
+  margin-left: 70px;
+}
+.bar_srck {
+  width: 5px;
+  height: 38px;
+  margin-top: 5px;
+  border-radius: 10px;
+  margin-right: 12px;
+  background-color: #9b7af5;
+}
+
+.photo_box {
+  width: 400px;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tag_item {
+  background: #000;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+.tag_srck {
+  color: #fff;
+  margin-left: 90px;
+}
+
+.title_dsy {
+  margin-left: 90px;
+}
+
+.photo_box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.name {
+  font-family: alibb-regular;
+}
+.person {
+  width: 600px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #f1f1f1;
+}
+.person_title {
+  /* width: 100px; */
+}
+
+.person_content {
+  opacity: .7;
+  width: 470px;
+}
+
+.video_box,.img_box {
+  width: 300px;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+

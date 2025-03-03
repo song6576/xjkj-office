@@ -56,7 +56,7 @@
                 <div class="ml-10" @click="openMemberModal">开通会员 尊享会员权益</div>
               </div> -->
             </div>
-            <div class="mt-40" style="color: #b1b1b1">
+            <div class="mt-40 w-100" style="color: #b1b1b1">
               <div class="fs-12"><span>©</span>版权声明</div>
             </div>
             <fieldset
@@ -110,10 +110,42 @@
               <img src="@/assets/dz2.png" alt="img" width="32" height="32" />
               <div class="mt-3">{{ data?.numberOfLikes }}</div>
             </div>
-            <!-- <div class="flex flex-ai flex-col ml-20 cp sc" @click="changeStatus(1)">
-              <img src="@/assets/sc.png" alt="img" width="32" height="32" />
-              <div class="mt-3">{{ data?.previewQuantity }}</div>
-            </div> -->
+            <div style="position: relative">
+              <div
+                class="flex flex-ai flex-col ml-20 share"
+                @mouseenter="handleMouseEnter"
+                @mouseleave="handleMouseLeave"
+              >
+                <img
+                  src="@/assets/share.png"
+                  alt="img"
+                  width="30"
+                  height="30"
+                  class="cp"
+                />
+                <div class="mt-15"></div>
+                <div class="share_pop flex flex-col p-10 w-100" v-if="isShareShow">
+                  <div
+                    v-for="(item, index) in sharelist"
+                    :key="index"
+                    class="mt-10 cp shareItem"
+                    @click="changeStatus(index + 1)"
+                  >
+                    <div class="flex flex-ai">
+                      <div class="share_pop_icon">
+                        <img :src="item.imgUrl" alt="" width="25" height="25" />
+                      </div>
+                      <div class="w-100 fs-14 ml-5">{{ item.name }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="copyLine flex flex-col flex-ai flex-jc" v-if="isCopyShow">
+                <div>【璇机星炬科技社(www.xjkj66.com)】</div>
+                <div class="pt-5">公众号：璇机星炬科技社</div>
+                <div class="pt-5">链接🔗复制成功</div>
+              </div>
+            </div>
           </div>
           <div>
             <u-comment :config="config" @submit="submit" @reply-page="replyPage">
@@ -125,9 +157,9 @@
                   <div
                     class="appUserUserLevelName fs-8"
                     :style="{
-                      backgroundColor:
-                        user.appUserUserLevelColor === '普通会员'
-                          ? '#9a9a9a'
+                      background:
+                        user.appUserUserLevelName === '普通会员'
+                          ? '#9a9a9a !important'
                           : 'linear-gradient(126deg, #fd7808 0%, #f8b41a 100%)',
                     }"
                   >
@@ -227,9 +259,38 @@
       </div>
     </div>
   </div>
+  <div v-if="isPoster" class="poster" @click="isPoster = false">
+    <div id="capture" className="flex flex-col" style="background: #fff">
+      <div class="flex-1">
+        <div style="position: relative">
+          <img src="@/assets/logo.png" alt="logo" class="logo_poster" />
+          <img src="@/assets/content_box.png" alt="" class="poster_bg" />
+          <div class="flex flex-col" style="position: absolute; top: 60px; left:-30px;transform: scale(0.65)">
+                <div class="fs-40" style="font-family: alibb-medium;">矩阵引流实战</div>
+                <div class=" fs-16 mt-10" style="color: #637693;width: 305px">
+                  在数字海洋中，矩阵引流，不止是数字游戏 更是策略的艺术
+                </div>
+              </div>
+          <div class="nowTime">{{ nowTimeWeek }}</div>
+        </div>
+      </div>
+      <div class="flex-1 poster_content">
+        <div class="poster_title">「{{ data?.title }}」</div>
+        <div class="fs-12 mt-10">作者：{{ data?.nickname }}</div>
+        <div class="fs-12 sys">扫一扫 查看更多内容</div>
+        <div class="flex flex-between flex-ai share_box">
+          <img src="@/assets/big-logo.png" alt="logo" class="share_logo" />
+          <canvas ref="qrcodeCanvas"></canvas>
+        </div>
+      </div>
+      <div class="BtnLogo cp" @click="posterDown" title="下载">
+      <img src="@/assets/share/down_icon.png" width="30" height="30" alt="" />
+      </div>
+    </div>
+  </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
+import { ref, onMounted, onBeforeUnmount, reactive, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getArticleContent, getArticleThumbs } from "@/api/nav-content";
 import { ElMessage } from "element-plus";
@@ -237,18 +298,29 @@ import { useUserStore } from "@/store/index";
 import AvatorImg from "@/assets/login/icon.png";
 import Viewer from "viewerjs";
 import "viewerjs/dist/viewer.css";
-import {
-  UToast,
-  Time,
-  CommentApi,
-  CommentSubmitApi,
-  ConfigApi,
-  cloneDeep,
-  usePage,
-  CommentReplyPageApi,
-} from "undraw-ui";
+import { UToast } from "undraw-ui";
 import { getArticleCommentList, getArticleUserComment } from "@/api/comment";
+import html2canvas from "html2canvas";
+import QRCode from "qrcode";
 
+const qrcodeCanvas = ref(null);
+const nowTimeWeek = ref(null);
+const nowTime = () => {
+  // 或者当前时间，年月日时分秒
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1 > 9 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1);
+  const day = now.getDate()> 9 ? now.getDate() : "0" + now.getDate();
+  const hour = now.getHours() > 9 ? now.getHours() : "0" + now.getHours();
+  const minute = now.getMinutes() > 9 ? now.getMinutes() : "0" + now.getMinutes();
+  const second = now.getSeconds()> 9 ? now.getSeconds() : "0" + now.getSeconds();
+  // 获取周几
+  const week = now.getDay();
+  const weekArr = ["日", "一", "二", "三", "四", "五", "六"];
+  const weekDay = weekArr[week];
+  nowTimeWeek.value = `${year}-${month}-${day} 星期${weekDay} ${hour}:${minute}:${second}`;
+  return `${year}-${month}-${day} 星期${weekDay} ${hour}:${minute}:${second}`;
+};
 const config = reactive({
   user: {}, // 当前用户信息
   comments: [], // 评论数据
@@ -267,7 +339,7 @@ const getArticleCommentLists = async (params) => {
     portalNavigationBarArticleId: route.params.id,
     ...params,
   });
-  comments.value = data.map((item) => {
+  comments.value = data?.map((item) => {
     return {
       id: item.id,
       parentId: item.parentId,
@@ -328,9 +400,9 @@ const viewReply = async (item) => {
 setTimeout(() => {
   // 当前登录用户数据
   config.user = {
-    id: userInfo.id,
-    username: userInfo.username,
-    avatar: userInfo.headSculpture,
+    id: userInfo?.id,
+    username: userInfo?.username,
+    avatar: userInfo?.headSculpture,
   };
   config.comments = comments.value;
 }, 500);
@@ -420,6 +492,17 @@ const route = useRoute();
 const data = ref({});
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 const avator = ref(null);
+const sharelist = ref([
+  {
+    name: "复制链接",
+    imgUrl: require("../../assets/share/copy.png"),
+  },
+  {
+    imgUrl: require("../../assets/share/photo.png"),
+    name: "海报",
+  },
+]);
+const shareIndex = ref(0);
 const getData = async () => {
   const res = await getArticleContent({ portalNavigationBarArticleId: route.params.id });
   data.value = res.data;
@@ -442,15 +525,41 @@ const goDetail = () => {
 const goHome = () => {
   router.push({ name: "home" });
 };
+const isCopyShow = ref(false);
 const changeStatus = async (type) => {
-  if (data.value) {
-    data.value.numberOfLikes++;
+  if (type === 0) {
+    if (data.value) {
+      data.value.numberOfLikes++;
+    }
+    await getArticleThumbs({
+      portalNavigationBarArticleId: route.params.id,
+      type,
+    });
+  } else if (type === 1) {
+    isCopyShow.value = true;
+    // 复制链接,加上璇机星炬
+    const input = document.createElement("input");
+    input.value = "【璇机星炬】" + window.location.href;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
+    setTimeout(() => {
+      isCopyShow.value = false;
+    }, 2000);
+  } else if (type === 2) {
+    BtnLogo();
+    setTimeout(async () => {
+      const canvas = qrcodeCanvas.value;
+      const url = 'http://www.xjkj66.com/detail/49';
+      await nextTick(() => {
+        QRCode.toCanvas(canvas, url, {
+          width: 100,
+          height: 100,
+        });
+      });
+    }, 200);
   }
-  await getArticleThumbs({
-    portalNavigationBarArticleId: route.params.id,
-    type,
-  });
-  console.log("changeStatus", data);
 };
 const loginOut = () => {
   localStorage.removeItem("token");
@@ -474,6 +583,13 @@ const openMyModal = async (text) => {
 const userPage = () => {
   router.push({ name: "userDetail" });
 };
+const isShareShow = ref(false);
+const handleMouseEnter = () => {
+  isShareShow.value = true;
+};
+const handleMouseLeave = () => {
+  isShareShow.value = false;
+};
 const isShow = ref(true);
 const timer = ref(null);
 onMounted(() => {
@@ -489,287 +605,45 @@ onMounted(() => {
     if (localStorage.getItem("token")) {
       isShow.value = false;
     }
+    nowTime();
   }, 1000);
 });
 // 卸载时清除定时器
 onBeforeUnmount(() => {
   clearInterval(timer.value);
 });
+
+const url_new = ref(window.location.href);
+const isPoster = ref(false);
+const BtnLogo = () => {
+  let dpi = window.devicePixelRatio || 2;
+  let options = {
+    useCORS: true, // 跨域
+    ignoreElements: false,
+    scale: dpi,
+  };
+  isPoster.value = true;
+  setTimeout(() => {
+    const captureElement = document.querySelector("#capture");
+    html2canvas(captureElement, options)
+      .then((canvas) => {
+        console.log(canvas);
+        let url = canvas.toDataURL("image/png"); // 转 base64
+        url_new.value = url;
+      })
+      .catch((error) => {
+        console.error("html2canvas 出错:", error);
+      });
+  }, 500);
+};
+const posterDown = () => {
+  // 实现下载功能
+  const link = document.createElement("a");
+  link.href = url_new.value;
+  link.download = `「璇机星炬」${data?.value?.title}.png`; // 下载的文件名
+  link.click();
+};
 </script>
 <style scoped>
-.user_menu_member {
-  padding: 3px;
-}
-.content {
-  position: relative;
-  background-color: #f8f9fb;
-}
-.content_html {
-  overflow: hidden;
-}
-.content-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.nav_flex {
-  position: absolute;
-  top: -34px;
-  left: 0px;
-  color: #999;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-}
-
-/* 去掉a标签的默认样式 */
-a {
-  text-decoration: none;
-  color: #333;
-}
-
-/* 去掉a标签的默认下划线 */
-a:hover {
-  text-decoration: none;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.zoomed-image {
-  max-width: 90%;
-  max-height: 90%;
-}
-
-/* 去掉a标签的默认下划线 */
-a:visited {
-  text-decoration: none;
-}
-
-/* 去掉a标签的默认下划线 */
-a:active {
-  text-decoration: none;
-}
-
-/* 去掉a标签的默认下划线 */
-a:link {
-  text-decoration: none;
-}
-
-.separator {
-  color: #6d6d6d;
-}
-.separator::after,
-.separator::before {
-  content: "";
-  background: rgba(50, 50, 50, 0.06);
-  max-width: 20%;
-  height: 1px;
-  margin: 0 1em;
-  flex: 1;
-}
-.left_modal {
-  width: 880px;
-  border-radius: 10px;
-  background-color: #fff;
-}
-.line {
-  height: 1px;
-  background-color: rgba(50, 50, 50, 0.06);
-  width: 100%;
-}
-
-.profilePicture {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.dsy {
-  font-weight: 600;
-  font-size: 18px;
-  color: #265aff;
-}
-.box_img img {
-  width: 100%;
-  height: 100%;
-}
-.right_modal {
-  width: 296px;
-}
-.box_img_content_item {
-  width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-.login {
-  width: 296px;
-  height: 308px;
-}
-.login_btn {
-  width: 101px;
-  height: 30px;
-  background: linear-gradient(126deg, #0961fe 0%, #0b99f5 100%);
-  border-radius: 20px;
-  color: #fff;
-  border-image: linear-gradient(153deg, rgba(50, 201, 255, 1), rgba(171, 255, 255, 1)) 1 1;
-}
-.register_btn {
-  width: 101px;
-  height: 30px;
-  background: linear-gradient(126deg, #fd7808 0%, #f8b41a 100%);
-  border-radius: 20px;
-  color: #fff;
-  border-image: linear-gradient(153deg, rgba(248, 169, 55, 1), rgba(255, 216, 161, 1)) 1 1;
-}
-.office {
-  width: 296px;
-  height: 900px;
-  background-color: #fff;
-  border-radius: 10px;
-}
-.active {
-  background: #3873ff;
-  border-radius: 10px;
-  color: #fff;
-}
-.tab_box_img {
-  width: 160px;
-  height: 113px;
-  border-radius: 10px;
-}
-.avator {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-}
-.activePage {
-  color: #fff;
-  background: #3873ff !important;
-}
-.pageItem {
-  background-color: #fff;
-}
-.card_data {
-  position: absolute;
-  right: 3%;
-  bottom: 13%;
-}
-.tabList_content {
-  width: 760px;
-}
-.fs_count {
-  position: absolute;
-  top: 5%;
-  right: 2%;
-  padding: 5px 10px;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #4d4d4d;
-  font-size: 12px;
-  opacity: 0.7;
-}
-.sort::before {
-  content: "";
-  width: 4px;
-  height: 4px;
-  margin: 0 0.5rem;
-  border-radius: 50%;
-  display: inline-block;
-  vertical-align: middle;
-  background: #6c6d6e;
-  opacity: 0.3;
-}
-.dz {
-  opacity: 0.7;
-}
-.dz:hover {
-  opacity: 1;
-}
-.sc {
-  opacity: 0.8;
-}
-.sc:hover {
-  opacity: 1;
-}
-.zf_box {
-  position: relative;
-  width: 500px;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.1);
-}
-.member_s {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 14px;
-  background-color: red;
-  border-radius: 8px 5px 20px 0;
-  padding: 2px 12px;
-  color: #fff;
-}
-.left_img {
-  width: 300px;
-  height: 200px;
-  border-radius: 15px;
-  background: url(../../assets/content_box.png) no-repeat;
-  background-size: cover;
-}
-.member_btn {
-  width: 200px;
-  padding: 5px 0;
-  background: linear-gradient(135deg, #fd7a64 10%, #fb2d2d 100%);
-  border-radius: 18px;
-  color: #fff;
-  font-size: 16px;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 30px;
-}
-.money {
-  margin-top: -12px;
-}
-.userLevelName {
-  position: absolute;
-  left: 0;
-  top: 0px;
-  font-size: 12px;
-  background-color: red;
-  border-radius: 0px 2px 10px 0;
-  padding: 2px 10px;
-  color: #fff;
-}
-.appUserUserLevelName {
-  padding: 1px 4px;
-  border-radius: 12px;
-  color: #ffffff;
-  background: linear-gradient(126deg, #fd7808 0%, #f8b41a 100%);
-}
-.appUserUserLevelLogin {
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 20px;
-  height: 20px;
-}
-.viewReply {
-  color: #3873ff;
-}
+@import url("./index.css");
 </style>

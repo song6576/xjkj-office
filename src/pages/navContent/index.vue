@@ -7,25 +7,27 @@
             class="flex flex-col cp"
             style="background-color: #fff; border-radius: 18px; position: relative"
           >
-            <div class="box_img" style="width: 748px; height: 308px;position: relative">
+            <div class="box_img" style="width: 748px; height: 308px; position: relative">
               <img src="@/assets/content_box.png" class="content_box" alt="" />
             </div>
             <img
-                src="@/assets/content_box_logo.png"
-                width="80"
-                height="21"
-                alt=""
-                style="position: absolute; left: 25px; top: 25px"
-              />
-              <div class="flex flex-col" style="position: absolute; top: 120px; left: 50px">
-                <div class="fs-40" style="font-family: alibb-medium;">矩阵引流实战</div>
-                <div class=" fs-16 mt-10" style="color: #637693;width: 305px">
-                  在数字海洋中，矩阵引流，不止是数字游戏 更是策略的艺术
-                </div>
+              src="@/assets/content_box_logo.png"
+              width="80"
+              height="21"
+              alt=""
+              style="position: absolute; left: 25px; top: 25px"
+            />
+            <div class="flex flex-col" style="position: absolute; top: 120px; left: 50px">
+              <div class="fs-40 text_out-1" style="font-family: alibb-medium">
+                {{ bigTitleContent?.title }}
               </div>
+              <div class="fs-16 mt-10 text_out-2" style="color: #637693; width: 305px">
+                {{ bigTitleContent?.ziTitle }}
+              </div>
+            </div>
             <div class="content_dsy p-15">
-              <div class="box_img_title">{{ bigTitleContent?.title }}</div>
-              <div class="box_img_content fs-12 mt-5" style="color: #637693">
+              <div class="box_img_title text_out-1">{{ bigTitleContent?.title }}</div>
+              <div class="box_img_content text_out-2 fs-12 mt-5" style="color: #637693;width: 700px">
                 {{ bigTitleContent?.content }}
               </div>
             </div>
@@ -40,7 +42,7 @@
               :key="index"
               class="ml-10 cp flex flex-ai fs-12 tabItem"
               :class="{ TabItemActive: initSort === index }"
-              style="color:#637693"
+              style="color: #637693"
               @click="sortChange(item, index)"
             >
               <div>{{ item.name }}</div>
@@ -86,10 +88,14 @@
               >
                 <div class="tab_box_img" style="position: relative">
                   <img :src="item.image" alt="img" width="100%" height="100%" />
-                  <div class="userLevelName" v-if="item.isMembersAreRequired">{{ item.userLevelName }}</div>
+                  <div class="userLevelName" v-if="item.isMembersAreRequired">
+                    {{ item.userLevelName }}
+                  </div>
                 </div>
                 <div class="flex flex-col ml-15">
-                  <div class="fs-14 cp" style="font-weight: 500" @click="toDetail(item)">{{ item.title }}</div>
+                  <div class="fs-14 cp" style="font-weight: 500" @click="toDetail(item)">
+                    {{ item.title }}
+                  </div>
                   <div class="pt-15 fs-12" style="color: #637693">
                     {{ item.describeContent }}
                   </div>
@@ -111,7 +117,7 @@
                     <div class="avator flex flex-ai">
                       <img
                         :src="item.profilePicture"
-                        style="border-radius: 50%;object-fit: contain;"
+                        style="border-radius: 50%; object-fit: contain"
                         alt="img"
                         width="100%"
                         height="100%"
@@ -185,30 +191,40 @@
             </div>
             <div class="fs-12" style="color: #989ea6; margin-top: 60px">Hi,欢迎登录</div>
             <div class="flex flex-ai mt-5" v-if="!isShow">
-                <div class="fs-15">{{ userInfo?.nickname }}</div>
-                <img
-                  :src="userInfo?.levelLogin"
-                  width="20"
-                  height="20"
-                  alt=""
-                  class="ml-3"
-                />
-              </div>
+              <div class="fs-15">{{ userInfo?.nickname }}</div>
+              <img
+                :src="userInfo?.levelLogin"
+                width="20"
+                height="20"
+                alt=""
+                class="ml-3"
+              />
+            </div>
             <div class="btn_box flex flex-ai mt-26" v-if="isShow">
-              <div class="btn flex flex-ai flex-jc login_btn cp" @click="openMyModal('登录')">登录</div>
-              <div class="btn flex flex-ai flex-jc register_btn ml-10 cp" @click="openMyModal('注册')">注册</div>
+              <div
+                class="btn flex flex-ai flex-jc login_btn cp"
+                @click="openMyModal('登录')"
+              >
+                登录
+              </div>
+              <div
+                class="btn flex flex-ai flex-jc register_btn ml-10 cp"
+                @click="openMyModal('注册')"
+              >
+                注册
+              </div>
             </div>
             <div class="btn_box flex flex-ai mt-26" v-else>
-                <div
-                  class="btn flex flex-ai flex-jc register_btn ml-10 cp"
-                  @click="loginOut"
-                >
-                  退出登录
-                </div>
-                <div class="btn flex flex-ai flex-jc user_btn ml-10 cp" @click="userPage">
-                  用户中心
-                </div>
+              <div
+                class="btn flex flex-ai flex-jc register_btn ml-10 cp"
+                @click="loginOut"
+              >
+                退出登录
               </div>
+              <div class="btn flex flex-ai flex-jc user_btn ml-10 cp" @click="userPage">
+                用户中心
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -216,9 +232,13 @@
   </div>
 </template>
 <script setup>
-import { ref, watch, onMounted,onBeforeUnmount } from "vue";
-import { useRoute,useRouter } from "vue-router";
-import { getNavContentList, getNavContentBanner,getNavContentListTop } from "@/api/nav-content";
+import { ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import {
+  getNavContentList,
+  getNavContentBanner,
+  getNavContentListTop,
+} from "@/api/nav-content";
 import { useUserStore } from "@/store/index";
 import AvatorImg from "@/assets/login/icon.png";
 import { ElMessage } from "element-plus";
@@ -227,7 +247,7 @@ const avator = ref(null);
 const userStore = useUserStore();
 // 接收传递过来的路由携带的参数
 const route = useRoute();
-const routePage = useRouter()
+const routePage = useRouter();
 const id = route.params.id;
 const bigTitleContent = ref({});
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -245,25 +265,25 @@ const visiblePages = () => {
     endPage = totalPages.value;
     startPage = Math.max(endPage - 10 + 1, 1);
   }
-  const aa = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i)
+  const aa = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   dataListPage.value = aa;
-}
+};
 const changePage = (item, index) => {
   current.value = index;
-  getNavContentLists(initSort.value,id)
+  getNavContentLists(initSort.value, id);
 };
 const next = () => {
   current.value = current.value + 1;
-  getNavContentLists(initSort.value,id)
+  getNavContentLists(initSort.value, id);
   if (current.value >= dataListPage.value.length) {
     current.value = 0;
-    getNavContentLists(initSort.value,id)
+    getNavContentLists(initSort.value, id);
   }
 };
 const getSortData = async () => {
   const res = await getNavContentListTop();
   sort.value = res.data;
-}
+};
 const toDetail = (item) => {
   routePage.push({ name: "detail", params: { id: item.id } });
 };
@@ -271,10 +291,10 @@ const initSort = ref(0);
 const sort = ref();
 const sortChange = (item, index) => {
   initSort.value = index;
-  getNavContentLists(item.id,id)
-}
-const tabListContent = ref([])
-const getNavContentLists = async (sort=initSort.value,id) => {
+  getNavContentLists(item.id, id);
+};
+const tabListContent = ref([]);
+const getNavContentLists = async (sort = initSort.value, id) => {
   const res = await getNavContentList({
     pageNum: current.value + 1,
     pageSize: 10,
@@ -282,9 +302,9 @@ const getNavContentLists = async (sort=initSort.value,id) => {
     sortType: sort,
   });
   tabListContent.value = res.data;
-  totalPages.value = Math.ceil(res.count/ 10)
-  visiblePages()
-}
+  totalPages.value = Math.ceil(res.count / 10);
+  visiblePages();
+};
 const getNavContentBanners = async (id) => {
   const res = await getNavContentBanner({ portalNavigationBarId: id });
   bigTitleContent.value = res.data;
@@ -316,7 +336,7 @@ watch(
   (newVal, oldVal) => {
     // id = newVal
     getNavContentBanners(newVal);
-    getNavContentLists(initSort.value,newVal);
+    getNavContentLists(initSort.value, newVal);
   }
 );
 const timer = ref(null);
@@ -340,8 +360,8 @@ onMounted(() => {
     }
   }, 1000);
   getNavContentBanners(id);
-  getNavContentLists(initSort.value,id)
-  getSortData()
+  getNavContentLists(initSort.value, id);
+  getSortData();
 });
 </script>
 <style scoped>
@@ -381,7 +401,7 @@ onMounted(() => {
 }
 .login_btn {
   width: 101px;
-  height: 40px;
+  height: 30px;
   background: linear-gradient(126deg, #0961fe 0%, #0b99f5 100%);
   border-radius: 20px;
   color: #fff;
